@@ -1,13 +1,33 @@
 import { IconButton, Button } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { AiOutlineBell } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 const Header = () => {
+  const [scroll, setScroll] = useState<boolean>(false);
+
+  const windowScrolled = () => {
+    if (window.scrollY > 0) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", windowScrolled);
+
+    return () => window.removeEventListener("scroll", windowScrolled);
+  }, []);
+
   return (
     <header className="max-w-[1480px] z-50 left-0 right-0 top-0  mx-auto  fixed w-full">
-      <div className="flex items-center justify-between py-[15px] px-[20px] md:py-[18px] md:px-[20px]">
+      <div
+        className={`flex items-center justify-between transition-all ease-out duration-300  py-[15px] px-[20px] md:py-[18px] md:px-[20px] ${
+          scroll && "bg-red-600 rounded-lg"
+        }`}
+      >
         <div className="flex items-center md:space-x-8">
           <Image
             src={`/site-logo.svg`}

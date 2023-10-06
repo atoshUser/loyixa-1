@@ -8,7 +8,7 @@
   }
 
   html {
-    @apply h-screen scroll-smooth;
+    @apply h-screen scrollbar-thin scrollbar-track-transparent  scrollbar-thumb-orange-400 scroll-smooth;
   }
 
   body {

@@ -26,7 +26,7 @@ const Hero = ({ movie }: IHero) => {
           }`}
           fill
           alt={selected.original_title}
-          className="object-cover"
+          className="object-cover opacity-50"
         />
       </div>
       <div className="absolute p-[20px]  top-[200px] left-[20px] md:top-[260px] md:left-[50px] lg:top-[350px]">
@@ -44,11 +44,13 @@ const Hero = ({ movie }: IHero) => {
             />
             <span>({selected.vote_count})</span>
           </div>
-          <h2 className="font-extrabold  max-w-[250px] md:max-w-[400px] lg:max-w-[700px] text-[25px] md:text-[30px] md:leading-[1.1] lg:text-[40px] lg:leading-[1.3]">
+          <h2 className="font-extrabold  max-w-[250px] md:max-w-[400px] lg:max-w-[700px] text-[25px] md:text-[30px] md:leading-[1.1] mb-[10px] md:mb-[18px] lg:mb-[22px] lg:text-[40px] lg:leading-[1.3]">
             {selected.title}
           </h2>
           <p className="max-w-[260px] md:max-w-[380px] mb-[10px] lg:max-w-[680px]">
-            {selected.overview}...
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
+            voluptatum ea aut amet earum ad fugit consequuntur ex distinctio
+            voluptate. Ratione eum, provident ab,
           </p>
           <div className="w-[150px] p-[1px] md:p-[2.5px] bg-orange-500 rounded-lg">
             <Button
