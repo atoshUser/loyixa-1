@@ -1,6 +1,8 @@
+import { auth } from "@/firebase";
 import { useAuth } from "@/hooks/useAuth";
-import { User } from "firebase/auth";
-import { ReactNode, createContext, useMemo } from "react";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/router";
+import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
 interface AuthContextState {
   user: User | null;
@@ -22,7 +24,18 @@ export const AuthContext = createContext<AuthContextState>({
 });
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const { error, isLoading, user, signIn, signUp, logOut } = useAuth();
+  const {
+    error,
+    isLoading,
+    user,
+    signIn,
+    signUp,
+    logOut,
+    setUser,
+    setLoading,
+  } = useAuth();
+  const [initialLoader, setInitialLoader] = useState<boolean>(true);
+  const router = useRouter();
 
   const value = useMemo(
     () => ({
@@ -37,7 +50,27 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     [error, isLoading, user]
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  useEffect(() => {
+    return onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Ro'yxatdan o'tgan
+        setLoading(false);
+        setUser(user);
+      } else {
+        // Ro'yxatdan o'tmagan
+        setUser(null);
+        setLoading(true)
+        router.push("/auth");
+      }
+      setInitialLoader(false);
+    });
+  }, []);
+
+  return (
+    <AuthContext.Provider value={value}>
+      {!initialLoader ? children : "Loader..."}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContextProvider;

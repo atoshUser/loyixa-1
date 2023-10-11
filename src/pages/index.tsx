@@ -5,6 +5,8 @@ import { Header, Hero, Row } from "@/components";
 import { GetServerSideProps } from "next";
 import { IMovie } from "@/interface/movie.app";
 import { API_REQUEST } from "@/service/service.app";
+import { useContext } from "react";
+import { AuthContext } from "@/context/auth.context";
 
 export default function Home({
   trending_data_day,
@@ -13,6 +15,11 @@ export default function Home({
   tv_series,
   tv_rated,
 }: IServerProps) {
+  const { isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return null;
+  }
   return (
     <>
       <Head>

@@ -1,12 +1,14 @@
 import { IconButton, Button } from "@mui/material";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { AiOutlineBell } from "react-icons/ai";
+import { LuLogOut } from "react-icons/lu";
 import { VscAccount } from "react-icons/vsc";
+import { AuthContext } from "@/context/auth.context";
 const Header = () => {
   const [scroll, setScroll] = useState<boolean>(false);
-
+  const { logOut } = useContext(AuthContext);
   const windowScrolled = () => {
     if (window.scrollY > 0) {
       setScroll(true);
@@ -75,6 +77,15 @@ const Header = () => {
           <li>
             <IconButton aria-label="account-icons" sx={{ color: "white" }}>
               <VscAccount />
+            </IconButton>
+          </li>
+          <li>
+            <IconButton
+              onClick={logOut}
+              aria-label="logOut-icon"
+              sx={{ color: "white" }}
+            >
+              <LuLogOut />
             </IconButton>
           </li>
         </ul>
