@@ -15,3 +15,17 @@
     @apply w-full h-full text-[18px] flex flex-col font-normal text-white bg-[#141414];
   }
 }
+
+/* custom class name */
+@layer components {
+  .input {
+    @apply w-full rounded outline-none transition-all duration-300 bg-gray-800 focus:bg-slate-500 py-3 px-4 md:py-4 md:px-5;
+  }
+}
+
+.authBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

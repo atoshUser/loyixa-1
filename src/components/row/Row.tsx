@@ -15,6 +15,7 @@ const Row = ({ movie, title, isBig, isFirst }: IRow) => {
   const handliClick = (data: "right" | "left") => {
     if (carouselRef.current) {
       const { scrollLeft, clientWidth } = carouselRef.current;
+
       const carouselData =
         data == "left" ? scrollLeft - clientWidth : scrollLeft + clientWidth;
 
