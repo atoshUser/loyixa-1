@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@headlessui/react": "^1.7.17",
     "@mui/material": "^5.14.11",
     "@types/react-stars": "^2.2.2",
     "firebase": "^10.4.0",
@@ -19,6 +20,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
+    "react-player": "^2.13.0",
     "react-stars": "^2.2.5",
     "tailwind-scrollbar": "^3.0.5",
     "tailwind-scrollbar-hide": "^1.1.7",

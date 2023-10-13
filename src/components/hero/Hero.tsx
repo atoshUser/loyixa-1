@@ -6,12 +6,18 @@ import { image_base_url } from "@/helper/constant";
 import ReactStars from "react-stars";
 import { TbPlayerPlayFilled } from "react-icons/tb";
 import { Button } from "@mui/material";
+import { UseMovieStore } from "@/store";
 const Hero = ({ movie }: IHero) => {
   const [selected, setSelected] = useState<IMovie>({} as IMovie);
-
+  const { setModal, setCurrentMovie } = UseMovieStore();
   const randomMovie = (data: IMovie[]) => {
     const randomData = data[Math.floor(Math.random() * data.length)];
     setSelected(randomData);
+  };
+
+  const handleOpenModal = () => {
+    setModal(true);
+    setCurrentMovie(selected);
   };
 
   useEffect(() => {
@@ -29,7 +35,7 @@ const Hero = ({ movie }: IHero) => {
           className="object-cover opacity-50"
         />
       </div>
-      <div className="absolute p-[20px]  top-[200px] left-[20px] md:top-[260px] md:left-[50px] lg:top-[350px]">
+      <div className="absolute p-[20px]  top-[200px] left-[20px] md:top-[260px] md:left-[50px] lg:top-[280px]">
         <div className="flex flex-col">
           <div className="w-[120px] flex mb-[5px] md:mb-[10px] rounded-bl-lg rounded-tr-lg bg-blue-500/60 capitalize justify-center">
             {selected.media_type}
@@ -56,6 +62,8 @@ const Hero = ({ movie }: IHero) => {
             <Button
               className="w-full text-white bg-[#141414]"
               startIcon={<TbPlayerPlayFilled />}
+              onClick={handleOpenModal}
+              sx={{ color: "white" }}
             >
               Watch Now
             </Button>

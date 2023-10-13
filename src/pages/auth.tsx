@@ -87,14 +87,9 @@ const Auth = () => {
                   color="success"
                   type="submit"
                   className="bg-green-400 w-full text-white font-semibold"
-                  disabled={isLoading}
                   sx={{ fontWeight: "600" }}
                 >
-                  {isLoading
-                    ? "Loading..."
-                    : auth == "signIn"
-                    ? "Sign In"
-                    : "Sign Up"}
+                  {auth == "signIn" ? "Sign In" : "Sign Up"}
                 </Button>
               </div>
               <div className="mt-[5px] md:mt-[10px]">

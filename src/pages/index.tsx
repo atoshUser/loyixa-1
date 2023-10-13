@@ -1,12 +1,13 @@
 import Image from "next/image";
 
 import Head from "next/head";
-import { Header, Hero, Row } from "@/components";
+import { Header, Hero, MovieModal, Row } from "@/components";
 import { GetServerSideProps } from "next";
 import { IMovie } from "@/interface/movie.app";
 import { API_REQUEST } from "@/service/service.app";
 import { useContext } from "react";
 import { AuthContext } from "@/context/auth.context";
+import { UseMovieStore } from "@/store";
 
 export default function Home({
   trending_data_day,
@@ -16,6 +17,7 @@ export default function Home({
   tv_rated,
 }: IServerProps) {
   const { isLoading } = useContext(AuthContext);
+  const { modal } = UseMovieStore();
 
   if (isLoading) {
     return null;
@@ -60,6 +62,7 @@ export default function Home({
             isBig={false}
             title="Cartoons"
           />
+          {modal && <MovieModal />}
           <div className="h-[150px] bg-red-700"></div>
           <div className="h-[150px] bg-slate-500"></div>
         </div>
@@ -71,23 +74,37 @@ export default function Home({
 export const getServerSideProps: GetServerSideProps<
   IServerProps
 > = async () => {
-  const trending_all_day_data = await fetch(API_REQUEST.trending_day_data).then(
-    (res) => res.json()
-  );
-  const trending_all_data = await fetch(API_REQUEST.trending_all).then((res) =>
-    res.json()
-  );
-  const top_rated_data = await fetch(API_REQUEST.top_rated).then((res) =>
-    res.json()
-  );
+  const [
+    trending_all_day_data,
+    trending_all_data,
+    top_rated_data,
+    tv_series_data,
+    tv_rated_data,
+  ] = await Promise.all([
+    fetch(API_REQUEST.trending_day_data).then((res) => res.json()),
+    fetch(API_REQUEST.trending_all).then((res) => res.json()),
+    fetch(API_REQUEST.top_rated).then((res) => res.json()),
+    fetch(API_REQUEST.tv_series).then((res) => res.json()),
+    fetch(API_REQUEST.tv_rated).then((res) => res.json()),
+  ]);
 
-  const tv_series_data = await fetch(API_REQUEST.tv_series).then((res) =>
-    res.json()
-  );
+  // const trending_all_day_data = await fetch(API_REQUEST.trending_day_data).then(
+  //   (res) => res.json()
+  // );
+  // const trending_all_data = await fetch(API_REQUEST.trending_all).then((res) =>
+  //   res.json()
+  // );
+  // const top_rated_data = await fetch(API_REQUEST.top_rated).then((res) =>
+  //   res.json()
+  // );
 
-  const tv_rated_data = await fetch(API_REQUEST.tv_rated).then((res) =>
-    res.json()
-  );
+  // const tv_series_data = await fetch(API_REQUEST.tv_series).then((res) =>
+  //   res.json()
+  // );
+
+  // const tv_rated_data = await fetch(API_REQUEST.tv_rated).then((res) =>
+  //   res.json()
+  // );
   return {
     props: {
       trending_data_day: trending_all_day_data.results,

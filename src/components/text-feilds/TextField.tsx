@@ -11,7 +11,9 @@ const TextField = ({ ...props }: TextFields & FieldHookConfig<string>) => {
     <div className="flex flex-col space-y-[4px] md:space-y-[6px]">
       <label className="inline-block w-full">
         <input
-          className={`input ${meta.error && "border border-red-500 "}`}
+          className={`input text-[12px] md:text-[15px] lg:text-[18px] ${
+            meta.error && "border border-red-500 "
+          }`}
           {...props}
           {...field}
         />

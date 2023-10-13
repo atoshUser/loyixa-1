@@ -56,7 +56,7 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <ul className="flex items-center space-x-3 md:space-x-5">
+        <ul className="flex items-center space-x-2 lg:space-x-5">
           <li>
             <IconButton aria-label="search-icon" sx={{ color: "white" }}>
               <HiOutlineSearch />

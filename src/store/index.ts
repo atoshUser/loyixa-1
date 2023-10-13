@@ -4,11 +4,14 @@ import { create } from "zustand";
 interface IinfoState {
   modal: boolean;
   movie: IMovie;
+  setModal: (bool: boolean) => void;
+  setCurrentMovie: (data: IMovie) => void;
 }
 
-const useInfoStore = create<IinfoState>()((set) => ({
+export const UseMovieStore = create<IinfoState>()((set) => ({
   modal: false,
   movie: {} as IMovie,
   setModal: (bool: boolean) => set((state) => ({ ...state, modal: bool })),
-  setMovie: (data: IMovie) => set((state) => ({ ...state, movie: data })),
+  setCurrentMovie: (data: IMovie) =>
+    set((state) => ({ ...state, movie: data })),
 }));

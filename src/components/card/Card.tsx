@@ -3,8 +3,14 @@ import { ICard } from "./card.props";
 import Image from "next/image";
 import { image_base_url } from "@/helper/constant";
 import ReactStars from "react-stars";
+import { UseMovieStore } from "@/store";
 
 const Card = ({ movie, isBig = false }: ICard) => {
+  const { setCurrentMovie, setModal } = UseMovieStore();
+  const handleModal = () => {
+    setModal(true);
+    setCurrentMovie(movie);
+  };
   return (
     <li
       className={`${
@@ -12,6 +18,7 @@ const Card = ({ movie, isBig = false }: ICard) => {
           ? "w-[180px] h-[250px] md:w-[220px] md:h-[330px] lg:w-[350px] lg:h-[430px]"
           : `w-[150px] h-[180px] md:w-[220px] md:h-[250px] lg:w-[280px] lg:h-[350px]`
       } relative flex-shrink-0 flex transition duration-300 flex-col cursor-pointer hover:scale-105 overflow-hidden rounded-lg`}
+      onClick={handleModal}
     >
       <div className="absolute w-full  h-full">
         <Image
