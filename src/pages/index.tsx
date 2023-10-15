@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 import Head from "next/head";
-import { Header, Hero, MovieModal, Row } from "@/components";
+import { Header, Hero, MovieModal, Row, SubscriptionPlan } from "@/components";
 import { GetServerSideProps } from "next";
-import { IMovie } from "@/interface/movie.app";
+import { IMovie, IProduct } from "@/interface/movie.app";
 import { API_REQUEST } from "@/service/service.app";
 import { useContext } from "react";
 import { AuthContext } from "@/context/auth.context";
@@ -15,6 +15,7 @@ export default function Home({
   top_rated,
   tv_series,
   tv_rated,
+  product,
 }: IServerProps) {
   const { isLoading } = useContext(AuthContext);
   const { modal } = UseMovieStore();
@@ -22,6 +23,9 @@ export default function Home({
   if (isLoading) {
     return null;
   }
+
+  const subscriptionPlan = false;
+  if (!subscriptionPlan) return <SubscriptionPlan products={product} />;
   return (
     <>
       <Head>
@@ -43,6 +47,7 @@ export default function Home({
             isBig={true}
             isFirst={true}
           />
+
           <Row
             title="Top Rated"
             movie={top_rated}
@@ -80,31 +85,15 @@ export const getServerSideProps: GetServerSideProps<
     top_rated_data,
     tv_series_data,
     tv_rated_data,
+    products,
   ] = await Promise.all([
     fetch(API_REQUEST.trending_day_data).then((res) => res.json()),
     fetch(API_REQUEST.trending_all).then((res) => res.json()),
     fetch(API_REQUEST.top_rated).then((res) => res.json()),
     fetch(API_REQUEST.tv_series).then((res) => res.json()),
     fetch(API_REQUEST.tv_rated).then((res) => res.json()),
+    fetch(API_REQUEST.product).then((res) => res.json()),
   ]);
-
-  // const trending_all_day_data = await fetch(API_REQUEST.trending_day_data).then(
-  //   (res) => res.json()
-  // );
-  // const trending_all_data = await fetch(API_REQUEST.trending_all).then((res) =>
-  //   res.json()
-  // );
-  // const top_rated_data = await fetch(API_REQUEST.top_rated).then((res) =>
-  //   res.json()
-  // );
-
-  // const tv_series_data = await fetch(API_REQUEST.tv_series).then((res) =>
-  //   res.json()
-  // );
-
-  // const tv_rated_data = await fetch(API_REQUEST.tv_rated).then((res) =>
-  //   res.json()
-  // );
   return {
     props: {
       trending_data_day: trending_all_day_data.results,
@@ -112,6 +101,7 @@ export const getServerSideProps: GetServerSideProps<
       top_rated: top_rated_data.results,
       tv_series: tv_series_data.results,
       tv_rated: tv_rated_data.results,
+      product: products.products.data,
     },
   };
 };
@@ -122,4 +112,5 @@ export interface IServerProps {
   top_rated: IMovie[];
   tv_series: IMovie[];
   tv_rated: IMovie[];
+  product: IProduct[];
 }

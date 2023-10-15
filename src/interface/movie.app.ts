@@ -29,3 +29,15 @@ export interface IMovieTrailer {
   size: number;
   type: string;
 }
+
+export interface IProduct {
+  id: string;
+  images: string[];
+  metadata: {
+    adv: string;
+  };
+  name: string;
+  default_price: {
+    unit_amount: number;
+  };
+}

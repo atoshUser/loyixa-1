@@ -16,9 +16,14 @@ const Row = ({ movie, title, isBig, isFirst }: IRow) => {
       const { scrollLeft, clientWidth } = carouselRef.current;
 
       const carouselData =
-        data == "left" ? scrollLeft - clientWidth : scrollLeft + clientWidth;
+        data == "left"
+          ? scrollLeft - clientWidth / 2
+          : scrollLeft + clientWidth / 2;
 
-      carouselRef.current.scrollTo({ left: carouselData, behavior: "smooth" });
+      carouselRef.current.scrollTo({
+        left: carouselData,
+        behavior: "smooth",
+      });
       if (data == "left") {
         if (moved == 0) {
           return;
