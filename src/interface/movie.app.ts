@@ -39,5 +39,6 @@ export interface IProduct {
   name: string;
   default_price: {
     unit_amount: number;
+    id: string;
   };
 }

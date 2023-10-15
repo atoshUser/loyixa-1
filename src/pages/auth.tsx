@@ -11,11 +11,15 @@ const Auth = () => {
   const [auth, setAuth] = useState<"signIn" | "signUp">("signIn");
   const { error, isLoading, signIn, signUp, logOut } = useContext(AuthContext);
 
-  const onSubmit = (dataForm: { email: string; password: string }) => {
-    console.log("onSubmit", dataForm);
-
+  const onSubmit = async (dataForm: { email: string; password: string }) => {
     if (auth == "signUp") {
       signUp(dataForm.email, dataForm.password);
+      const res = await fetch("/api/customer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: dataForm.email }),
+      });
+      await res.json();
     } else {
       signIn(dataForm.email, dataForm.password);
     }

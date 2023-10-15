@@ -3,9 +3,6 @@ import { FieldHookConfig, useField, ErrorMessage } from "formik";
 import { TextFields } from "./text-fields.props";
 const TextField = ({ ...props }: TextFields & FieldHookConfig<string>) => {
   const [field, meta, helpers] = useField(props);
-  console.log("field =>", field);
-  console.log("meta =>", meta);
-  console.log("helpers =>", helpers);
 
   return (
     <div className="flex flex-col space-y-[4px] md:space-y-[6px]">
