@@ -16,6 +16,7 @@ export default function Home({
   tv_series,
   tv_rated,
   product,
+  subscription,
 }: IServerProps) {
   const { isLoading } = useContext(AuthContext);
   const { modal } = UseMovieStore();
@@ -24,8 +25,7 @@ export default function Home({
     return null;
   }
 
-  const subscriptionPlan = false;
-  if (!subscriptionPlan) return <SubscriptionPlan products={product} />;
+  if (!subscription.length) return <SubscriptionPlan products={product} />;
   return (
     <>
       <Head>
@@ -76,9 +76,10 @@ export default function Home({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
-  IServerProps
-> = async () => {
+export const getServerSideProps: GetServerSideProps<IServerProps> = async ({
+  req,
+}) => {
+  const user_id = req.cookies.user_id;
   const [
     trending_all_day_data,
     trending_all_data,
@@ -86,6 +87,7 @@ export const getServerSideProps: GetServerSideProps<
     tv_series_data,
     tv_rated_data,
     products,
+    subscription,
   ] = await Promise.all([
     fetch(API_REQUEST.trending_day_data).then((res) => res.json()),
     fetch(API_REQUEST.trending_all).then((res) => res.json()),
@@ -93,6 +95,7 @@ export const getServerSideProps: GetServerSideProps<
     fetch(API_REQUEST.tv_series).then((res) => res.json()),
     fetch(API_REQUEST.tv_rated).then((res) => res.json()),
     fetch(API_REQUEST.product).then((res) => res.json()),
+    fetch(`${API_REQUEST.subscription}/${user_id}`).then((res) => res.json()),
   ]);
   return {
     props: {
@@ -102,6 +105,7 @@ export const getServerSideProps: GetServerSideProps<
       tv_series: tv_series_data.results,
       tv_rated: tv_rated_data.results,
       product: products.products.data,
+      subscription: subscription.subscription.data,
     },
   };
 };
@@ -113,4 +117,5 @@ export interface IServerProps {
   tv_series: IMovie[];
   tv_rated: IMovie[];
   product: IProduct[];
+  subscription: string[];
 }

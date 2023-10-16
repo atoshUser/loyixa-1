@@ -9,4 +9,5 @@ export const API_REQUEST = {
   tv_series: `${base_url}/tv/on_the_air?api_key=${api_key}&language=en-US`,
   tv_rated: `${base_url}/tv/top_rated?api_key=${api_key}&language=en-US`,
   product: `${domain_url}/api/products`,
+  subscription: `${domain_url}/api/subscription`,
 };

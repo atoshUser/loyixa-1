@@ -14,12 +14,6 @@ const Auth = () => {
   const onSubmit = async (dataForm: { email: string; password: string }) => {
     if (auth == "signUp") {
       signUp(dataForm.email, dataForm.password);
-      const res = await fetch("/api/customer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: dataForm.email }),
-      });
-      await res.json();
     } else {
       signIn(dataForm.email, dataForm.password);
     }

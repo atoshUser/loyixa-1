@@ -20,9 +20,9 @@ export default async function handler(
   if (method == "POST") {
     try {
       const { email, priceId } = req.body;
-
-      const customers = await stripe.customers.list({ limit: 100 });
       const public_domain = process.env.NEXT_PUBLIC_DOMAIN as string;
+      const customers = await stripe.customers.list({ limit: 100 });
+      
       const customer = customers.data.find((c) => c.email == email);
       const subscription = await stripe.checkout.sessions.create({
         mode: "subscription",

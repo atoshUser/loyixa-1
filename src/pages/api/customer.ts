@@ -18,8 +18,12 @@ export default async function handler(
 
   if (method == "POST") {
     try {
-      const { email } = req.body;
-      const customer = await stripe.customers.create({ email });
+      const { email, user_id } = req.body;
+
+      const customer = await stripe.customers.create({
+        email,
+        metadata: { user_id },
+      });
       return res.status(200).json({ messaging: "Success" });
     } catch (error) {
       const result = error as Error;
