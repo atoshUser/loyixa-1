@@ -5,9 +5,9 @@ import { Header, Hero, MovieModal, Row, SubscriptionPlan } from "@/components";
 import { GetServerSideProps } from "next";
 import { IMovie, IProduct } from "@/interface/movie.app";
 import { API_REQUEST } from "@/service/service.app";
-import { useContext } from "react";
-import { AuthContext } from "@/context/auth.context";
+
 import { UseMovieStore } from "@/store";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Home({
   trending_data_day,
@@ -18,12 +18,7 @@ export default function Home({
   product,
   subscription,
 }: IServerProps) {
-  const { isLoading } = useContext(AuthContext);
   const { modal } = UseMovieStore();
-
-  if (isLoading) {
-    return null;
-  }
 
   if (!subscription.length) return <SubscriptionPlan products={product} />;
   return (
@@ -80,6 +75,11 @@ export const getServerSideProps: GetServerSideProps<IServerProps> = async ({
   req,
 }) => {
   const user_id = req.cookies.user_id;
+  if (!user_id) {
+    return {
+      redirect: { destination: "/auth", permanent: false },
+    };
+  }
   const [
     trending_all_day_data,
     trending_all_data,

@@ -54,13 +54,11 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return onAuthStateChanged(auth, (user) => {
       if (user) {
         // Ro'yxatdan o'tgan
-        setLoading(false);
+
         setUser(user);
       } else {
         // Ro'yxatdan o'tmagan
         setUser(null);
-        setLoading(true)
-        router.push("/auth");
       }
       setInitialLoader(false);
     });
