@@ -1,6 +1,7 @@
 import React from "react";
+import { IMembership } from "./membership-plan.props";
 
-const Membership = () => {
+const Membership = ({ subscription }: IMembership) => {
   return (
     <div className="px-[10px]">
       <div className=" grid grid-columns-1  md:grid-cols-4 gap-x-[10px] px-[15px] mt-[15px] border border-white py-[10px] border-b-0">
@@ -13,8 +14,9 @@ const Membership = () => {
         <div className="flex flex-col  col-span-3          mt-[10px] md:mt-[15px] pb-[10px] md:pb-[15px]">
           <div className="flex flex-col w-full justify-between md:flex-row border-b border-white">
             <div>
-              <p>avezdjanov@gmail.com</p>
-              <p>Password:*****</p>
+              <p>{subscription.customer.email}</p>
+
+              <p> Password:*****</p>
             </div>
             <div className="flex flex-col items-end">
               <p className="font-semibold md:font-bold cursor-pointer hover:underline text-blue-500 hover:text-blue-500/50">

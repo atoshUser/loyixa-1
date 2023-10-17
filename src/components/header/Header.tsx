@@ -6,6 +6,7 @@ import { AiOutlineBell } from "react-icons/ai";
 import { LuLogOut } from "react-icons/lu";
 import { VscAccount } from "react-icons/vsc";
 import { AuthContext } from "@/context/auth.context";
+import Link from "next/link";
 const Header = () => {
   const [scroll, setScroll] = useState<boolean>(false);
   const { logOut } = useContext(AuthContext);
@@ -75,9 +76,11 @@ const Header = () => {
             </IconButton>
           </li>
           <li>
-            <IconButton aria-label="account-icons" sx={{ color: "white" }}>
-              <VscAccount />
-            </IconButton>
+            <Link href={`/account`}>
+              <IconButton aria-label="account-icons" sx={{ color: "white" }}>
+                <VscAccount />
+              </IconButton>
+            </Link>
           </li>
           <li>
             <IconButton

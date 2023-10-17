@@ -42,3 +42,27 @@ export interface IProduct {
     id: string;
   };
 }
+
+export interface Subscription {
+  start_date: Date;
+  id: string;
+  current_period_end: Date;
+  current_period_start: Date;
+  customer: {
+    currency: string;
+    email: string;
+  };
+  plan: {
+    nickname: string;
+    amount: number;
+    active: boolean;
+  };
+  default_payment_method: {
+    card: {
+      brand: string;
+      exp_month: number;
+      exp_year: number;
+      last4: number;
+    };
+  };
+}
