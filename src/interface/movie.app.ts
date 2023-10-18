@@ -32,7 +32,7 @@ export interface IMovieTrailer {
 
 export interface IProduct {
   id: string;
-  images: string[];
+  images: string;
   metadata: {
     adv: string;
   };
