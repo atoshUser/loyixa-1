@@ -10,8 +10,9 @@ import React from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import moment from "moment";
+import { useAuth } from "@/hooks/useAuth";
 const Account = ({ subscription }: AccountProps) => {
-  console.log(subscription);
+  const { logOut } = useAuth();
 
   return (
     <>
@@ -51,7 +52,7 @@ const Account = ({ subscription }: AccountProps) => {
             <div className="flex self-start items-center gap-x-[5px] md:gap-x-[10px]">
               <MdOutlineSubscriptions className={`text-red-500`} />
               <span className="text-gray-500">
-                Member since{" "}
+                Member since
                 {moment(subscription.start_date * 1000).format("D,  MMM  YYYY")}
               </span>
             </div>
@@ -68,7 +69,10 @@ const Account = ({ subscription }: AccountProps) => {
 
             <div className="mt-6 grid flex-col md:flex-row grid-cols-1 md:grid-cols-4 border px-2 py-2 md:px-5 md:py-4 border-b-0">
               <h4 className="text-gray-600 text-lg md:text-xl">Settings</h4>
-              <div className="col-span-3 text-blue-500 hover:underline font-medium text-xl">
+              <div
+                onClick={logOut}
+                className="col-span-3 cursor-pointer text-blue-500 hover:underline font-medium text-xl"
+              >
                 Sign out of all devices
               </div>
             </div>

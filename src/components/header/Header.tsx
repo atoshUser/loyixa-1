@@ -7,6 +7,7 @@ import { LuLogOut } from "react-icons/lu";
 import { VscAccount } from "react-icons/vsc";
 import { AuthContext } from "@/context/auth.context";
 import Link from "next/link";
+import { NavMenu } from "..";
 const Header = () => {
   const [scroll, setScroll] = useState<boolean>(false);
   const { logOut } = useContext(AuthContext);
@@ -39,6 +40,7 @@ const Header = () => {
             height={50}
             className="cursor-pointer hover:opacity-70 "
           />
+          <NavMenu />
           <ul className="hidden md:flex items-center space-x-2 md:space-x-4 font-medium">
             <li className="hover:opacity-50 cursor-pointer text-[15px]  md:text-[20px] lg:text-[22px]">
               Home

@@ -3,11 +3,14 @@ import Image from "next/image";
 import Head from "next/head";
 import { Header, Hero, MovieModal, Row, SubscriptionPlan } from "@/components";
 import { GetServerSideProps } from "next";
-import { IMovie, IProduct } from "@/interface/movie.app";
+import { IMovie, IMyList, IProduct } from "@/interface/movie.app";
 import { API_REQUEST } from "@/service/service.app";
-
+import { useEffect, useContext } from "react";
 import { UseMovieStore } from "@/store";
 import { redirect } from "next/dist/server/api-utils";
+import { getList } from "@/helper/lists";
+import { useAuth } from "@/hooks/useAuth";
+import { AuthContext } from "@/context/auth.context";
 
 export default function Home({
   trending_data_day,
@@ -17,8 +20,14 @@ export default function Home({
   tv_rated,
   product,
   subscription,
+  list,
 }: IServerProps) {
   const { modal } = UseMovieStore();
+  const { user } = useContext(AuthContext);
+  // useEffect(() => {
+  //   getList(user?.uid as string);
+  // }, []);
+  console.log(list);
 
   if (!subscription.length) return <SubscriptionPlan products={product} />;
   return (
@@ -62,6 +71,9 @@ export default function Home({
             isBig={false}
             title="Cartoons"
           />
+          {list.length > 0 && (
+            <Row movie={list} isFirst={false} isBig={true} title="My List" />
+          )}
           {modal && <MovieModal />}
           <div className="h-[150px] bg-red-700"></div>
           <div className="h-[150px] bg-slate-500"></div>
@@ -97,6 +109,10 @@ export const getServerSideProps: GetServerSideProps<IServerProps> = async ({
     fetch(API_REQUEST.product).then((res) => res.json()),
     fetch(`${API_REQUEST.subscription}/${user_id}`).then((res) => res.json()),
   ]);
+
+  const myList: IMyList[] = await getList(user_id);
+  console.log(myList);
+
   return {
     props: {
       trending_data_day: trending_all_day_data.results,
@@ -106,6 +122,7 @@ export const getServerSideProps: GetServerSideProps<IServerProps> = async ({
       tv_rated: tv_rated_data.results,
       product: products.products.data,
       subscription: subscription.subscription.data,
+      list: myList.map((c) => c.product),
     },
   };
 };
@@ -118,4 +135,5 @@ export interface IServerProps {
   tv_rated: IMovie[];
   product: IProduct[];
   subscription: string[];
+  list: IMovie[];
 }

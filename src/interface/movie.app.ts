@@ -44,13 +44,15 @@ export interface IProduct {
 }
 
 export interface Subscription {
-  start_date: Date;
+  start_date: number;
   id: string;
-  current_period_end: Date;
-  current_period_start: Date;
+  current_period_end: number;
+  current_period_start: number;
   customer: {
-    currency: string;
     email: string;
+    metadata: {
+      user_id: string;
+    };
   };
   plan: {
     nickname: string;
@@ -65,4 +67,9 @@ export interface Subscription {
       last4: number;
     };
   };
+}
+
+export interface IMyList {
+  userId: string;
+  product: IMovie;
 }

@@ -1,8 +1,14 @@
+import { AuthContext } from "@/context/auth.context";
+import { db } from "@/firebase";
+import { useAuth } from "@/hooks/useAuth";
 import { IMovieTrailer } from "@/interface/movie.app";
 import { UseMovieStore } from "@/store";
 import { IconButton, Tooltip } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { addDoc, collection } from "firebase/firestore";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { AiOutlineCloseCircle, AiFillLike } from "react-icons/ai";
 import { IoAdd } from "react-icons/io5";
 
@@ -12,7 +18,8 @@ const MovieModal = () => {
   const [movieTrailer, setMovieTrailer] = useState<IMovieTrailer>(
     {} as IMovieTrailer
   );
-
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
   const handleClose = () => {
     setModal(false);
   };
@@ -41,6 +48,19 @@ const MovieModal = () => {
     getVideo();
   }, [movie]);
 
+  // add product to myList
+
+  const addProductList = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "list"), {
+        userId: user?.uid,
+        product: movieTrailer,
+      });
+      router.replace(router.asPath);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
   return (
     <Modal open={modal} onClose={handleClose}>
       <div className="h-full flex justify-center items-center">
@@ -70,6 +90,7 @@ const MovieModal = () => {
               <div className="flex items-center">
                 <Tooltip title="Save " color="white">
                   <IconButton
+                    onClick={addProductList}
                     aria-label="add-movie-trailer"
                     size="large"
                     sx={{ color: "white" }}
